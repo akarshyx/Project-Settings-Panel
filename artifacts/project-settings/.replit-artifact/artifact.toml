@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Project Settings"
+description = "A responsive project workspace with an accessible Settings area for repository details, Git files, branches, and project preferences."
+version = "1.0.0"
+id = "artifacts/project-settings"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18926
+
+[services.development]
+run = "pnpm --filter @workspace/project-settings run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/project-settings", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/project-settings/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18926"
+BASE_PATH = "/"
